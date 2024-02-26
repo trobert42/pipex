@@ -6,7 +6,7 @@
 /*   By: trobert <trobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 16:47:43 by zerudo            #+#    #+#             */
-/*   Updated: 2022/10/30 15:41:27 by trobert          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:17:55 by trobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	first_process(t_data *data, char **argv, char **envp)
 
 void	nth_child(t_data *data, char *argv, char **envp)
 {
-	close(data->infile_fd);
 	close_pipes(data, data->index);
 	if (dup2(data->pipefd[data->index - 1][0], STDIN_FILENO) < 0)
 		error_free_quit(data, "dup2 for nth child stdin has failed\n", 1);
@@ -45,9 +44,6 @@ void	nth_child(t_data *data, char *argv, char **envp)
 
 void	last_process(t_data *data, char **argv, char **envp)
 {
-	close(data->infile_fd);
-	close(data->pipefd[data->cmd_nbr - 1][1]);
-	close(data->pipefd[data->cmd_nbr - 1][0]);
 	if (data->hered_flag == 1)
 		open_hered_outfile(data, argv[data->argc - 1]);
 	else
@@ -93,7 +89,6 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	init_var(&data, argc, envp);
-	data.path_envp = get_path_envp(envp);
 	if (is_same_str(argv[1], "here_doc") == 1 && argc >= 5)
 		hered_mode(&data, argv);
 	while (i < data.cmd_nbr)

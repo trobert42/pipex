@@ -6,7 +6,7 @@
 /*   By: trobert <trobert@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 16:47:43 by zerudo            #+#    #+#             */
-/*   Updated: 2022/06/17 19:10:59 by trobert          ###   ########.fr       */
+/*   Updated: 2022/05/04 10:56:30 by trobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	execute_cmd(t_data *data, char *argv, char **envp)
 		if (!data->path_cmd)
 			error_free_quit(data, "malloc in ft_cmdjoin has failed\n", 2);
 		data->spe_cmd = ft_split(argv, ' ');
-		//if (execve(data->path_cmd, data->cmd, envp) < 0)
-		//	free(data->path_cmd);
-		//if (execve(data->spe_cmd[0], data->spe_cmd, envp) < 0)
-		//	free_split(data->spe_cmd);
+		if (execve(data->path_cmd, data->cmd, envp) < 0)
+			free(data->path_cmd);
+		if (execve(data->spe_cmd[0], data->spe_cmd, envp) < 0)
+			free_split(data->spe_cmd);
 		i++;
 	}
-	//error_free_quit(data, "command not found: ", 3);
+	error_free_quit(data, "command not found: ", 3);
 }
 
 void	child1_process(t_data *data, int *pipefd, char **argv, char **envp)

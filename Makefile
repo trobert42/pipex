@@ -6,7 +6,7 @@
 #    By: trobert <trobert@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/21 15:43:19 by trobert           #+#    #+#              #
-#    Updated: 2022/08/03 18:53:38 by trobert          ###   ########.fr        #
+#    Updated: 2022/05/02 15:10:28 by trobert          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ CC = cc -g
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 
 MAKELIB = make -C libft/
 
@@ -51,7 +51,7 @@ CLEANLIB = make fclean -C libft/
 
 all: libcompil ${NAME}
 
-${NAME}: ${OBJS} includes/pipex.h
+${NAME}: ${OBJS}
 	${CC} ${CFLAGS} ${OBJS} ${INC} ${LIBFT} -o ${NAME}
 
 .c.o:
@@ -59,7 +59,7 @@ ${NAME}: ${OBJS} includes/pipex.h
 
 bonus: libcompil ${BNAME}
 
-${BNAME}: ${BOBJS} includes/pipex_bonus.h
+${BNAME}: ${BOBJS}
 	${CC} ${CFLAGS} ${BOBJS} ${INC} ${LIBFT} -o ${BNAME}
 
 libcompil :
@@ -69,7 +69,7 @@ clean:
 	${RM} ${OBJS} ${BOBJS}
 
 fclean: clean libclean
-	${RM} ${NAME} ${BNAME} infile outfile
+	${RM} ${NAME} ${BNAME}
 
 libclean:
 	${CLEANLIB}
